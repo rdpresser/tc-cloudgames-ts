@@ -8,6 +8,7 @@
     "build": "npm run clean && tsc",
     "start": "node dist/index.js",
     "build-and-start": "npm run build && npm start",
+    "upgrade-deps": "npx npm-check-updates -u && npm install",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -32,8 +33,8 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.29",
-    "@typescript-eslint/eslint-plugin": "^8.33.0",
-    "@typescript-eslint/parser": "^8.33.0",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",
@@ -44,8 +45,10 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "eslint-plugin-neverthrow": "^1.1.4",
     "fastify": "^5.3.3",
     "fastify-plugin": "^5.0.1",
-    "fastify-sensible": "^3.1.2"
+    "fastify-sensible": "^3.2.0",
+    "neverthrow": "^8.2.0"
   }
 }
