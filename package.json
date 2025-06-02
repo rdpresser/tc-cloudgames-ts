@@ -2,11 +2,12 @@
   "name": "tc-cloudgames-ts",
   "version": "1.0.0",
   "description": "Tech Challenge Cloud Games in TypeScript",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
     "start": "node dist/index.js",
+    "build-and-start": "npm run build && npm start",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -30,6 +31,7 @@
   "homepage": "https://github.com/rdpresser/tc-cloudgames-ts#readme",
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.29",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
     "@typescript-eslint/parser": "^8.33.0",
     "eslint": "^9.28.0",
@@ -40,5 +42,10 @@
     "rimraf": "^6.0.1",
     "ts-jest": "^29.3.4",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "fastify": "^5.3.3",
+    "fastify-plugin": "^5.0.1",
+    "fastify-sensible": "^3.1.2"
   }
 }
