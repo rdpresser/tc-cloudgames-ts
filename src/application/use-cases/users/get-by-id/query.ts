@@ -1,3 +1,3 @@
 export class GetUserQuery {
-  constructor(public id: number) {}
+  constructor(public id: string) {}
 }

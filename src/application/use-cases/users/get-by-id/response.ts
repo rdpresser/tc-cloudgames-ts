@@ -1,3 +1,3 @@
 export class GetUserResponse {
-  constructor(public id: number, public name: string) {}
+  constructor(public id: string, public firstName: string, public lastName: string, public email: string, public role: string) {}
 }
