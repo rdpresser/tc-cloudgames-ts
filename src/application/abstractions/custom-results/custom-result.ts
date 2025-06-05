@@ -1,7 +1,7 @@
 import { FastifyReply } from 'fastify';
 import { ValidationFailure } from 'fluent-ts-validator';
 import { Result } from 'neverthrow';
-
+import { z } from 'zod/v4';
 export class BadRequestError extends Error {
   constructor(message: string) {
     super(message);
@@ -35,8 +35,17 @@ export function handleResult<T, E extends Error>(result: Result<T, E>, reply: Fa
       errors: error.map((failure: ValidationFailure) => ({
         propertyName: failure.propertyName,
         code: failure.code,
-        message: failure.message,
-        severity: failure.severity
+        message: failure.message
+      }))
+    });
+  }
+
+  if (error instanceof z.ZodError) {
+    return reply.status(422).send({
+      errors: error.issues.map(issue => ({
+        propertyName: issue.path.join('.'),
+        code: issue.code,
+        message: issue.message
       }))
     });
   }

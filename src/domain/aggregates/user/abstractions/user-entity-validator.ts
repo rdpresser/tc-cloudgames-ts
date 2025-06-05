@@ -7,7 +7,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
 
   public static readonly ValidRoles: ReadonlySet<string> = new Set(["Admin", "User"]);
 
-  protected ValidateId(): void {
+  protected validateId(): void {
     this.validateIfString(user => user.id)
       .isNotEmpty()
         .withFailureMessage("User Id is required.")
@@ -19,7 +19,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
         .withFailureCode("Id.InvalidFormat");
   }
 
-  protected ValidateFirstName(): void {
+  protected validateFirstName(): void {
     this.validateIfString(user => user.firstName)
       .isNotEmpty()
         .withFailureMessage("First name is required.")
@@ -41,7 +41,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
         .withFailureCode("FirstName.InvalidCharacters");
   }
 
-  protected ValidateLastName(): void {
+  protected validateLastName(): void {
     this.validateIfString(user => user.lastName)
       .isNotEmpty()
         .withFailureMessage("Last name is required.")
@@ -63,7 +63,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
         .withFailureCode("LastName.InvalidCharacters");
   }
 
-  protected ValidateEmail(): void {
+  protected validateEmail(): void {
     this.validateIf(user => user.email)
       .isNotEmpty()
         .withFailureMessage("Email object is required.")
@@ -71,7 +71,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
         .withPropertyName("Email");
   }
 
-  protected ValidatePassword(): void {
+  protected validatePassword(): void {
     this.validateIfString(user => user.password)
       .isNotEmpty()
         .withFailureMessage("Password is required.")
@@ -115,7 +115,7 @@ export class UserEntityValidator extends AbstractValidator<User> {
         .withPropertyName("Password");
   }
 
-  protected ValidateRole(): void {
+  protected validateRole(): void {
     this.validateIfString(user => user.role)
       .isNotEmpty()
         .withFailureMessage("Role is required.")

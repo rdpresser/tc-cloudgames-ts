@@ -21,7 +21,7 @@ export class GetUserQueryHandler {
 
     // Here you would typically fetch the user from a database or repository
     //const userResult = User.create({ id: query.id, firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', password: 'password', role: 'user' }); // Simulated user
-    const userResult = User.create({ id: query.id, firstName: '', lastName: '', email: 'rodrigo@teste.com', password: '', role: 'asdasd' }); // Simulated user
+    const userResult = User.create({ id: query.id, firstName: '', lastName: '', email: '', password: '', role: 'asdasd' }); // Simulated user
 
     if (userResult.isErr()) {
       return errAsync(userResult.error);

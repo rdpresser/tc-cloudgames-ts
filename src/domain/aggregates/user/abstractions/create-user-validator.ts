@@ -4,11 +4,11 @@ export class CreateUserValidator extends UserEntityValidator {
 
   constructor() {
     super();
-    this.ValidateId();
-    this.ValidateFirstName();
-    this.ValidateLastName();
-    this.ValidateEmail();
-    this.ValidatePassword();
-    this.ValidateRole();
+    this.validateId();
+    this.validateFirstName();
+    this.validateLastName();
+    this.validateEmail();
+    this.validatePassword();
+    this.validateRole();
   }
 }

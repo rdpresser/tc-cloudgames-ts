@@ -1,5 +1,6 @@
 import { AbstractValidator, ValidationFailure } from 'fluent-ts-validator';
 import { ok, err, Result } from 'neverthrow';
+import { z } from "zod/v4";
 
 export class Email {
   public readonly value: string;
@@ -9,17 +10,24 @@ export class Email {
   }
 
   public static create(value: string): Result<Email, ValidationFailure[]> {
-    const email = new Email(value);
-    const validator = new EmailValidator();
-    const result = validator.validate(email);
+    //const result = EmailSchema.safeParse({ email: "" });
 
-    if (!result.isValid()) {
-      return err(result.getFailures());
+    const email = new Email(value);
+    const validator = new EmailValidator().validate(email);
+
+    if (!validator.isValid()) {
+      return err(validator.getFailures());
     }
 
     return ok(new Email(value));
   }
 }
+
+export const EmailSchema = z.object({
+  email: z.email({ error: "Email must be a valid email address." })
+    .nonempty({ error: "Email is required.",  })
+    .max(200, { error: "Email cannot exceed 200 characters." })
+});
 
 export class EmailValidator extends AbstractValidator<Email> {
   constructor() {

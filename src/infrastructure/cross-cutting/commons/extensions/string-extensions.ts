@@ -2,7 +2,7 @@ import { validate as uuidValidate, version as uuidVersion } from 'uuid';
 
 export function joinWithQuotes(list: ReadonlySet<string>): string {
   return Array.from(list)
-    .map(r => `"${r}"`)
+    .map(r => `'${r}'`)
     .join(", ");
 }
 
