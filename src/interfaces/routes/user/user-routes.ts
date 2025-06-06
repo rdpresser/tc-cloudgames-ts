@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify';
-import { GetUserQuery } from '../../../application/use-cases/users/get-by-id/query';
-import { GetUserQueryHandler } from '../../../application/use-cases/users/get-by-id/handler-zod';
+import { GetUserQuery } from '../../../application/use-cases/users/get-by-id/query-params';
+import { GetUserQueryHandler } from '../../../application/use-cases/users/get-by-id/query-handler';
 import { Mediator } from '../../../application/abstractions/messaging/mediator';
-import { GetUserResponse } from 'application/use-cases/users/get-by-id/response';
+import { GetUserResponse } from 'application/use-cases/users/get-by-id/query-response';
 import { handleResult, handleZodError } from '../../custom-results/custom-result';
 import { isNullOrEmptyOrInvalidUuid } from '../../../infrastructure/cross-cutting/commons/extensions/string-extensions';
-import { CreateUserResponse } from '../../../application/use-cases/users/create-user/response';
+import { CreateUserResponse } from '../../../application/use-cases/users/create-user/command-response';
 import { CreateUserCommandHandler } from '../../../application/use-cases/users/create-user/command-handler';
-import { CreateUserCommand } from '../../../application/use-cases/users/create-user/command-schema-validator';
+import { CreateUserCommand } from '../../../application/use-cases/users/create-user/command-schema';
 import { CreateUserDomainSchema } from '../../../domain/aggregates/user/create-schema-validator';
 
 export default async function userRoutes(fastify: FastifyInstance) {

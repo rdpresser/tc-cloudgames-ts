@@ -1,14 +1,14 @@
 import { Result } from 'neverthrow';
 import { User } from '../../../../domain/aggregates/user/user';
-import { CreateUserResponse } from './response';
+import { CreateUserResponse } from './command-response';
 import { ZodError } from 'zod/v4';
 import { CreateUserDomainSchemaType } from '../../../../domain/aggregates/user/create-schema-validator';
-import { CreateUserCommand } from './command-schema-validator';
+import { CreateUserCommand } from './command-schema';
 
 export class CreateUserMapper {
 
-  static toDomain(r: CreateUserCommand): Result<CreateUserDomainSchemaType, ZodError> {
-    return User.create(r);
+  static async toDomain(r: CreateUserCommand): Promise<Result<CreateUserDomainSchemaType, ZodError>> {
+    return await User.create(r);
   }
 
   static toResponse(user: CreateUserDomainSchemaType): CreateUserResponse {
