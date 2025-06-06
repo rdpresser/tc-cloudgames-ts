@@ -8,14 +8,6 @@ import { CreateUserCommand } from './command-schema-validator';
 export class CreateUserMapper {
 
   static toDomain(r: CreateUserCommand): Result<CreateUserDomainSchemaType, ZodError> {
-    // const userProps: UserProps = {
-    //   firstName: r.firstName,
-    //   lastName: r.lastName,
-    //   email: r.email,
-    //   password: r.password,
-    //   role: r.role
-    // };
-
     return User.create(r);
   }
 

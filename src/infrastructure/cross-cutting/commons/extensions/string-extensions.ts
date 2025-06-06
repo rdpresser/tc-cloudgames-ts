@@ -10,6 +10,14 @@ export function joinWithQuotes(list: ReadonlySet<string>): string {
     .join(", ");
 }
 
+export function joinArrayWithQuotes(list: string[]): string {
+  if (!list || list.length === 0) {
+    return '';
+  }
+
+  return list.map(r => `'${r}'`).join(", ");
+}
+
 export function isNullOrEmpty(value?: string | null | undefined): boolean {
   return value == null || value === undefined || value.trim() === '' || value.trim() === 'null' || value.trim() === 'undefined';
 }

@@ -1,6 +1,7 @@
 import { FastifyReply } from 'fastify';
 import { Result } from 'neverthrow';
 import { ZodError } from 'zod/v4';
+
 export class BadRequestError extends Error {
   constructor(message: string) {
     super(message);
@@ -30,13 +31,7 @@ export function handleResult<T, E extends Error>(result: Result<T, E>, reply: Fa
 
   if (isZodError(error)) {
     // Map Zod errors to the desired format
-    return reply.status(422).send({
-      errors: error.issues.map(issue => ({
-        propertyName: issue.path.join('.'),
-        code: `${issue.path.join('.')}.${issue.code}`,
-        message: issue.message
-      }))
-    });
+    return handleZodError(error, reply);
   }
 
   // Default to 500 for unhandled errors
@@ -45,4 +40,14 @@ export function handleResult<T, E extends Error>(result: Result<T, E>, reply: Fa
 
 function isZodError(error: unknown): error is ZodError {
   return error instanceof ZodError;
+}
+
+export function handleZodError(error: ZodError, reply: FastifyReply) {
+  return reply.status(422).send({
+    errors: error.issues.map(issue => ({
+      propertyName: issue.path.join('.'),
+      code: `${issue.path.join('.')}.${issue.code}`,
+      message: issue.message
+    }))
+  });
 }

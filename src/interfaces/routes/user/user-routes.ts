@@ -3,11 +3,12 @@ import { GetUserQuery } from '../../../application/use-cases/users/get-by-id/que
 import { GetUserQueryHandler } from '../../../application/use-cases/users/get-by-id/handler-zod';
 import { Mediator } from '../../../application/abstractions/messaging/mediator';
 import { GetUserResponse } from 'application/use-cases/users/get-by-id/response';
-import { handleResult } from '../../../application/abstractions/custom-results/custom-result';
+import { handleResult, handleZodError } from '../../custom-results/custom-result';
 import { isNullOrEmptyOrInvalidUuid } from '../../../infrastructure/cross-cutting/commons/extensions/string-extensions';
 import { CreateUserResponse } from '../../../application/use-cases/users/create-user/response';
 import { CreateUserCommandHandler } from '../../../application/use-cases/users/create-user/command-handler';
 import { CreateUserCommand } from '../../../application/use-cases/users/create-user/command-schema-validator';
+import { CreateUserDomainSchema } from '../../../domain/aggregates/user/create-schema-validator';
 
 export default async function userRoutes(fastify: FastifyInstance) {
   const mediator = new Mediator();
@@ -31,14 +32,13 @@ export default async function userRoutes(fastify: FastifyInstance) {
   fastify.post<{ Body: CreateUserCommand }>(
     '/user',
     async (request, reply) => {
-      const user = request.body;
-      const command = new CreateUserCommand(
-        user.firstName,
-        user.lastName,
-        user.email,
-        user.password,
-        user.role
-      );
+      const user = await CreateUserDomainSchema.safeParseAsync(request.body);
+
+      if (!user.success) {
+        return handleZodError(user.error, reply);
+      }
+
+      const command = new CreateUserCommand(user.data);
 
       const result = await mediator.send<CreateUserCommand, CreateUserResponse>(command);
       return handleResult(result, reply);

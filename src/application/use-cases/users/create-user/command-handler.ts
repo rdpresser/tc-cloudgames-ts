@@ -1,5 +1,5 @@
 import { ResultAsync, okAsync, errAsync } from 'neverthrow';
-import { BadRequestError } from '../../../abstractions/custom-results/custom-result';
+import { BadRequestError } from '../../../../interfaces/custom-results/custom-result';
 import { z } from 'zod/v4';
 import { CreateUserResponse } from './response';
 import { CreateUserMapper } from './mapper';

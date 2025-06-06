@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { ZodError } from 'zod/v4';
 import { CreateUserDomainSchema, CreateUserDomainSchemaType } from './create-schema-validator';
 
-export const ValidRoles: ReadonlySet<string> = new Set(["Admin", "User"]);
-
 export interface UserProps  {
   firstName: string;
   lastName: string;
@@ -14,7 +12,7 @@ export interface UserProps  {
 }
 
 export class User {
-  public static create(props: UserProps): Result<CreateUserDomainSchemaType, ZodError<CreateUserDomainSchemaType>> {
+  public static create(props: UserProps): Result<CreateUserDomainSchemaType, ZodError> {
     const userDomain: CreateUserDomainSchemaType = {
       id: uuidv4(),
       firstName: props.firstName,
