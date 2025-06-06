@@ -14,9 +14,11 @@ export class Mediator {
     this.handlers.set(requestType, handler);
   }
 
-  send<TRequest extends object, TResponse, TError = Error>(request: TRequest): ResultAsync<TResponse, TError> {
+  send<TRequest, TResponse, TError = Error>(request: TRequest): ResultAsync<TResponse, TError> {
     const requestType = Object.getPrototypeOf(request).constructor;
     const handler = this.handlers.get(requestType) as Handler<TRequest, TResponse, TError> | undefined;
+
+    // If no handler is found, return an error asynchronously
     if (!handler) {
       return errAsync(new Error('No handler registered for this request') as TError);
     }

@@ -1,7 +1,6 @@
 import { FastifyReply } from 'fastify';
-import { ValidationFailure } from 'fluent-ts-validator';
 import { Result } from 'neverthrow';
-import { z } from 'zod/v4';
+import { ZodError } from 'zod/v4';
 export class BadRequestError extends Error {
   constructor(message: string) {
     super(message);
@@ -29,22 +28,12 @@ export function handleResult<T, E extends Error>(result: Result<T, E>, reply: Fa
     return reply.status(404).send({ error: error.message });
   }
 
-  if (Array.isArray(error) && error.every(item => item instanceof ValidationFailure)) {
-    // Map only the desired fields
-    return reply.status(422).send({
-      errors: error.map((failure: ValidationFailure) => ({
-        propertyName: failure.propertyName,
-        code: failure.code,
-        message: failure.message
-      }))
-    });
-  }
-
-  if (error instanceof z.ZodError) {
+  if (isZodError(error)) {
+    // Map Zod errors to the desired format
     return reply.status(422).send({
       errors: error.issues.map(issue => ({
         propertyName: issue.path.join('.'),
-        code: issue.code,
+        code: `${issue.path.join('.')}.${issue.code}`,
         message: issue.message
       }))
     });
@@ -52,4 +41,8 @@ export function handleResult<T, E extends Error>(result: Result<T, E>, reply: Fa
 
   // Default to 500 for unhandled errors
   return reply.status(500).send({ error: error.message || 'Internal Server Error' });
+}
+
+function isZodError(error: unknown): error is ZodError {
+  return error instanceof ZodError;
 }

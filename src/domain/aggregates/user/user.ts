@@ -1,85 +1,35 @@
 import { ok, Result, err } from 'neverthrow';
-import { Entity } from '../../entities/entity';
-import { Email } from './value-objects/email';
-import { ValidationFailure } from 'fluent-ts-validator';
-import { CreateUserValidator } from './abstractions/create-user-validator';
+import { v4 as uuidv4 } from 'uuid';
+import { ZodError } from 'zod/v4';
+import { CreateUserDomainSchema, CreateUserDomainSchemaType } from './create-schema-validator';
 
-export type UserProps = {
-  id: string;
+export const ValidRoles: ReadonlySet<string> = new Set(["Admin", "User"]);
+
+export interface UserProps  {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   role: string;
-};
+}
 
-type UserPropsValueObjects = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: Email;
-  password: string;
-  role: string;
-};
-
-// type UserPropsFromResultValueObjects = {
-//   firstName: string;
-//   lastName: string;
-//   email: Result<Email, ValidationFailure[]>;
-//   password: string;
-//   role: string;
-//   id: string;
-// };
-
-export class User extends Entity {
-  public readonly firstName: string;
-  public readonly lastName: string;
-  public readonly email: Email;
-  public readonly password: string;
-  public readonly role: string;
-
-  private constructor(props: UserPropsValueObjects) {
-    super(props.id);
-    this.firstName = props.firstName;
-    this.lastName = props.lastName;
-    this.email = props.email;
-    this.password = props.password;
-    this.role = props.role;
-  }
-
-  public static create(props: UserProps): Result<User, ValidationFailure[]> {
-    const emailResult = Email.create(props.email);
-
-    const valueObjects: Array<Result<any, ValidationFailure[]>> = [
-      this.ensureResult(emailResult, 'Email')
-    ];
-
-    const errors = this.validationErrors(valueObjects);
-    if (emailResult.isErr()) {
-      return err(errors);
-    }
-
-    const userPropsValueObjects: UserPropsValueObjects = {
+export class User {
+  public static create(props: UserProps): Result<CreateUserDomainSchemaType, ZodError<CreateUserDomainSchemaType>> {
+    const userDomain: CreateUserDomainSchemaType = {
+      id: uuidv4(),
       firstName: props.firstName,
       lastName: props.lastName,
-      email: emailResult.value,
+      email: props.email,
       password: props.password,
-      role: props.role,
-      id: props.id
+      role: props.role
     };
 
-    const user = new User(userPropsValueObjects)
-    const validator = new CreateUserValidator();
-    const result = validator.validate(user);
+    const user = CreateUserDomainSchema.safeParse(userDomain);
 
-    if (!result.isValid()) {
-      errors.push(...result.getFailures());
+    if (!user.success) {
+      return err(user.error);
     }
 
-    if (errors.length > 0) {
-      return err(errors);
-    }
-
-    return ok(user);
+    return ok(user.data);
   }
 }
