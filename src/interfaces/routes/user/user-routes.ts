@@ -1,14 +1,14 @@
 import { FastifyInstance } from 'fastify';
-import { GetUserQuery } from '../../../application/use-cases/users/get-by-id/query-params';
-import { GetUserQueryHandler } from '../../../application/use-cases/users/get-by-id/query-handler';
+import { GetUserQuery } from '../../../application/use-cases/users/get-by-id/query.params';
+import { GetUserQueryHandler } from '../../../application/use-cases/users/get-by-id/query.handler';
 import { Mediator } from '../../../application/abstractions/messaging/mediator';
-import { GetUserResponse } from 'application/use-cases/users/get-by-id/query-response';
+import { GetUserResponse } from 'application/use-cases/users/get-by-id/query.response';
 import { handleResult, handleZodError } from '../../custom-results/custom-result';
-import { isNullOrEmptyOrInvalidUuid } from '../../../infrastructure/cross-cutting/commons/extensions/string-extensions';
-import { CreateUserResponse } from '../../../application/use-cases/users/create-user/command-response';
-import { CreateUserCommandHandler } from '../../../application/use-cases/users/create-user/command-handler';
-import { CreateUserCommand } from '../../../application/use-cases/users/create-user/command-schema';
-import { CreateUserDomainSchema } from '../../../domain/aggregates/user/create-schema-validator';
+import { isNullOrEmptyOrInvalidUuid } from '../../../shared/extensions/string-extensions';
+import { CreateUserResponse } from '../../../application/use-cases/users/create-user/command.response';
+import { CreateUserCommandHandler } from '../../../application/use-cases/users/create-user/command.handler';
+import { CreateUserCommand } from '../../../application/use-cases/users/create-user/command.schema';
+import { CreateUserCommandSchema } from '../../../application/use-cases/users/create-user/command.schema';
 
 export default async function userRoutes(fastify: FastifyInstance) {
   const mediator = new Mediator();
@@ -32,7 +32,7 @@ export default async function userRoutes(fastify: FastifyInstance) {
   fastify.post<{ Body: CreateUserCommand }>(
     '/user',
     async (request, reply) => {
-      const user = await CreateUserDomainSchema.safeParseAsync(request.body);
+      const user = await CreateUserCommandSchema.safeParseAsync(request.body);
 
       if (!user.success) {
         return handleZodError(user.error, reply);

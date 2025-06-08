@@ -1,10 +1,5 @@
 import { z } from "zod/v4";
-import { PasswordSchema, FirstNameSchema, LastNameSchema, RoleSchema } from "../../../../infrastructure/cross-cutting/commons/default-schemas/user-default-schema";
-
-const EmailSchema =
-  z.email({ message: "Email must be a valid email address." })
-  .nonempty({ message: "Email is required." })
-  .max(200, { message: "Email cannot exceed 200 characters." });
+import { PasswordSchema, FirstNameSchema, LastNameSchema, RoleSchema, EmailSchema } from "../../../../shared/default-schemas/user-default-schema";
 
 export const CreateUserCommandSchema = z.object({
   firstName: FirstNameSchema,

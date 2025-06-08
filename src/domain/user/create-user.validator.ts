@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { PasswordSchema, FirstNameSchema, LastNameSchema, RoleSchema, UserIdSchema } from "../../../infrastructure/cross-cutting/commons/default-schemas/user-default-schema";
+import { FirstNameSchema, LastNameSchema } from "../../shared/default-schemas/user-default-schema";
 
 export const UniqueEmailSchema =
     z.email({ message: "Email must be a valid email address." })
@@ -15,12 +15,12 @@ export const UniqueEmailSchema =
   );
 
 export const CreateUserDomainSchema = z.object({
-  id: UserIdSchema,
+  //id: UserIdSchema,
   firstName: FirstNameSchema,
   lastName: LastNameSchema,
   email: UniqueEmailSchema,
-  password: PasswordSchema,
-  role: RoleSchema
+  // password: PasswordSchema,
+  // role: RoleSchema
 });
 
 export type CreateUserDomainSchemaType = z.infer<typeof CreateUserDomainSchema>;
