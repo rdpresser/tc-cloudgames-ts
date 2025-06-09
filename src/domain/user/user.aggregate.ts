@@ -24,9 +24,7 @@ export class User extends BaseEntityWithId {
     super();
   }
 
-  public static async create(
-    props: UserProps,
-  ): Promise<Result<User, ZodError>> {
+  public static async create(props: UserProps): Promise<Result<User, ZodError>> {
     const issues: $ZodIssue[] = [];
 
     const emailOrError = Email.create(props.email);
@@ -60,24 +58,12 @@ export class User extends BaseEntityWithId {
       return err(new ZodError(issues));
     }
 
-    if (
-      emailOrError.isErr() ||
-      passwordOrError.isErr() ||
-      roleOrError.isErr()
-    ) {
+    if (emailOrError.isErr() || passwordOrError.isErr() || roleOrError.isErr()) {
       // This should not happen because issues would have been caught above,
       // but this is a type-safe fallback.
       return err(new ZodError(issues));
     }
 
-    return ok(
-      new User(
-        props.firstName,
-        props.lastName,
-        emailOrError.value,
-        passwordOrError.value,
-        roleOrError.value,
-      ),
-    );
+    return ok(new User(props.firstName, props.lastName, emailOrError.value, passwordOrError.value, roleOrError.value));
   }
 }

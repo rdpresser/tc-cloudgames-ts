@@ -6,9 +6,7 @@ import { isNullOrEmpty } from 'shared/extensions';
 import { ZodError } from 'zod/v4';
 
 export class GetUserQueryHandler {
-  handle(
-    query: GetUserQuery,
-  ): ResultAsync<GetUserResponse, ZodError | BadRequestError | NotFoundError> {
+  handle(query: GetUserQuery): ResultAsync<GetUserResponse, ZodError | BadRequestError | NotFoundError> {
     if (!query) {
       return errAsync(new BadRequestError('Invalid query'));
     }

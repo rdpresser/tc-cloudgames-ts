@@ -28,9 +28,7 @@ export function isNullOrEmpty(value?: string | null | undefined): boolean {
   );
 }
 
-export function isNullOrEmptyOrInvalidUuid(
-  value?: string | null | undefined,
-): boolean {
+export function isNullOrEmptyOrInvalidUuid(value?: string | null | undefined): boolean {
   if (isNullOrEmpty(value)) {
     return true;
   }
@@ -39,9 +37,5 @@ export function isNullOrEmptyOrInvalidUuid(
   const defaultUuid = '00000000-0000-0000-0000-000000000000';
 
   // Use built-in uuidValidate and uuidVersion for validation
-  return (
-    !uuidValidate(trimmed) ||
-    uuidVersion(trimmed) !== 4 ||
-    trimmed === defaultUuid
-  );
+  return !uuidValidate(trimmed) || uuidVersion(trimmed) !== 4 || trimmed === defaultUuid;
 }

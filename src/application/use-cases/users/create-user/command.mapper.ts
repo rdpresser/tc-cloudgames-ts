@@ -5,9 +5,7 @@ import { BadRequestError } from 'application/common';
 import { CreateUserCommand, CreateUserResponse } from './';
 
 export class CreateUserMapper {
-  static async toDomain(
-    command: CreateUserCommand,
-  ): Promise<Result<User, ZodError | BadRequestError>> {
+  static async toDomain(command: CreateUserCommand): Promise<Result<User, ZodError | BadRequestError>> {
     if (!command) {
       return err(new BadRequestError('Invalid command'));
     }

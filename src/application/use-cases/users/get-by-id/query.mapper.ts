@@ -3,12 +3,6 @@ import { GetUserResponse } from './';
 
 export class GetUserMapper {
   static toResponse(user: User): GetUserResponse {
-    return new GetUserResponse(
-      user.id,
-      user.firstName,
-      user.lastName,
-      user.email.value,
-      user.role.value,
-    );
+    return new GetUserResponse(user.id, user.firstName, user.lastName, user.email.value, user.role.value);
   }
 }

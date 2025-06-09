@@ -3,10 +3,7 @@ import { FastifyReply } from 'fastify';
 import { Result } from 'neverthrow';
 import { ZodError } from 'zod/v4';
 
-export function handleResult<T, E extends Error>(
-  result: Result<T, E>,
-  reply: FastifyReply,
-) {
+export function handleResult<T, E extends Error>(result: Result<T, E>, reply: FastifyReply) {
   if (result.isOk()) {
     return reply.send(result.value);
   }
@@ -25,9 +22,7 @@ export function handleResult<T, E extends Error>(
   }
 
   // Default to 500 for unhandled errors
-  return reply
-    .status(500)
-    .send({ error: error.message || 'Internal Server Error' });
+  return reply.status(500).send({ error: error.message || 'Internal Server Error' });
 }
 
 function isZodError(error: unknown): error is ZodError {
