@@ -10,7 +10,6 @@
 // export async function userGetByIdRoute(fastify: FastifyInstance, mediator: Mediator) {
 //   //const mediator = new Mediator();
 
-
 //   //mediator.register(GetUserQuery, new GetUserQueryHandler());
 //   //mediator.register(CreateUserCommand, new CreateUserCommandHandler());
 

@@ -6,8 +6,8 @@ export function joinWithQuotes(list: ReadonlySet<string>): string {
   }
 
   return Array.from(list)
-    .map(r => `'${r}'`)
-    .join(", ");
+    .map((r) => `'${r}'`)
+    .join(', ');
 }
 
 export function joinArrayWithQuotes(list: string[]): string {
@@ -15,14 +15,22 @@ export function joinArrayWithQuotes(list: string[]): string {
     return '';
   }
 
-  return list.map(r => `'${r}'`).join(", ");
+  return list.map((r) => `'${r}'`).join(', ');
 }
 
 export function isNullOrEmpty(value?: string | null | undefined): boolean {
-  return value == null || value === undefined || value.trim() === '' || value.trim() === 'null' || value.trim() === 'undefined';
+  return (
+    value == null ||
+    value === undefined ||
+    value.trim() === '' ||
+    value.trim() === 'null' ||
+    value.trim() === 'undefined'
+  );
 }
 
-export function isNullOrEmptyOrInvalidUuid(value?: string | null | undefined): boolean {
+export function isNullOrEmptyOrInvalidUuid(
+  value?: string | null | undefined,
+): boolean {
   if (isNullOrEmpty(value)) {
     return true;
   }

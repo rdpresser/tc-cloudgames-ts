@@ -5,7 +5,7 @@ import { BaseEntityWithId } from 'domain/common';
 import { Email, Password, Role } from 'domain/user/value-objects';
 import { $ZodIssue } from 'zod/v4/core';
 
-export interface UserProps  {
+export interface UserProps {
   firstName: string;
   lastName: string;
   email: string;
@@ -19,12 +19,14 @@ export class User extends BaseEntityWithId {
     public readonly lastName: string,
     public readonly email: Email,
     public readonly password: Password,
-    public readonly role: Role
+    public readonly role: Role,
   ) {
     super();
   }
 
-  public static async create(props: UserProps): Promise<Result<User, ZodError>> {
+  public static async create(
+    props: UserProps,
+  ): Promise<Result<User, ZodError>> {
     const issues: $ZodIssue[] = [];
 
     const emailOrError = Email.create(props.email);
@@ -45,7 +47,7 @@ export class User extends BaseEntityWithId {
     const result = await CreateUserDomainSchema.safeParseAsync({
       firstName: props.firstName,
       lastName: props.lastName,
-      email: props.email
+      email: props.email,
       // password: props.password,
       // role: props.role
     });
@@ -58,18 +60,24 @@ export class User extends BaseEntityWithId {
       return err(new ZodError(issues));
     }
 
-    if (emailOrError.isErr() || passwordOrError.isErr() || roleOrError.isErr()) {
+    if (
+      emailOrError.isErr() ||
+      passwordOrError.isErr() ||
+      roleOrError.isErr()
+    ) {
       // This should not happen because issues would have been caught above,
       // but this is a type-safe fallback.
       return err(new ZodError(issues));
     }
 
-    return ok(new User(
-      props.firstName,
-      props.lastName,
-      emailOrError.value,
-      passwordOrError.value,
-      roleOrError.value
-    ));
+    return ok(
+      new User(
+        props.firstName,
+        props.lastName,
+        emailOrError.value,
+        passwordOrError.value,
+        roleOrError.value,
+      ),
+    );
   }
 }

@@ -1,17 +1,17 @@
-import { z } from "zod/v4";
-import { FirstNameSchema, LastNameSchema } from "shared/default-schemas";
+import { z } from 'zod/v4';
+import { FirstNameSchema, LastNameSchema } from 'shared/default-schemas';
 
-export const UniqueEmailSchema =
-    z.email({ message: "Email must be a valid email address." })
-    .nonempty({ message: "Email is required." })
-    .max(200, { message: "Email cannot exceed 200 characters." })
-    .refine(
+export const UniqueEmailSchema = z
+  .email({ message: 'Email must be a valid email address.' })
+  .nonempty({ message: 'Email is required.' })
+  .max(200, { message: 'Email cannot exceed 200 characters.' })
+  .refine(
     async (email) => {
       // async uniqueness check here
       console.log(`Checking if email ${email} is unique...`);
       return true;
     },
-    { message: "Email already exists!" }
+    { message: 'Email already exists!' },
   );
 
 export const CreateUserDomainSchema = z.object({
