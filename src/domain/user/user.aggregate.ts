@@ -46,8 +46,6 @@ export class User extends BaseEntityWithId {
       firstName: props.firstName,
       lastName: props.lastName,
       email: props.email,
-      // password: props.password,
-      // role: props.role
     });
 
     if (!result.success) {
