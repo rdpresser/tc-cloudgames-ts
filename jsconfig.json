@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "application/*": ["application/*"],
+      "domain/*": ["domain/*"],
+      "shared/*": ["shared/*"],
+      "interfaces/*": ["interfaces/*"],
+      "infrastructure/*": ["infrastructure/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ]
+}

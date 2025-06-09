@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { User, type UserProps } from '../../../../src/domain/user/user.aggregate';
+import { User, type UserProps } from 'domain/user';
 
 test('Create_User_From_Validator_Should_Return_Success_When_All_Fields_Are_Valid', async () => {
   // Arrange

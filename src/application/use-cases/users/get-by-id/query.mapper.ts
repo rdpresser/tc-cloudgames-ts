@@ -1,5 +1,5 @@
 import { User } from 'domain/user';
-import { GetUserResponse } from './';
+import { GetUserResponse } from 'application/use-cases/users/get-by-id';
 
 export class GetUserMapper {
   static toResponse(user: User): GetUserResponse {

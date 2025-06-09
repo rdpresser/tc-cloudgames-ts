@@ -2,7 +2,7 @@ import { z, ZodError } from 'zod/v4';
 import { RequestData } from 'mediatr-ts';
 import { Result } from 'neverthrow';
 import { BadRequestError } from 'application/common';
-import { CreateUserResponse } from './';
+import { CreateUserResponse } from 'application/use-cases/users/create-user';
 import { EmailSchema, FirstNameSchema, LastNameSchema, PasswordSchema, RoleSchema } from 'shared/default-schemas';
 
 export const CreateUserCommandSchema = z.object({

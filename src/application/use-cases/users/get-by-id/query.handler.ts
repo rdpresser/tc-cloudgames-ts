@@ -1,4 +1,4 @@
-import { GetUserMapper, GetUserQuery, GetUserResponse } from './';
+import { GetUserMapper, GetUserQuery, GetUserResponse } from 'application/use-cases/users/get-by-id';
 import { User } from 'domain/user';
 import { ResultAsync, errAsync } from 'neverthrow';
 import { BadRequestError, NotFoundError } from 'application/common';
