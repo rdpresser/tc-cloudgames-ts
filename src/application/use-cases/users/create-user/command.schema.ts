@@ -1,5 +1,9 @@
-import { z } from "zod/v4";
-import { PasswordSchema, FirstNameSchema, LastNameSchema, RoleSchema, EmailSchema } from "../../../../shared/default-schemas/user-default-schema";
+import { z, ZodError } from "zod/v4";
+import { RequestData } from "mediatr-ts";
+import { Result } from "neverthrow";
+import { BadRequestError } from "application/common";
+import { CreateUserResponse } from "./";
+import { EmailSchema, FirstNameSchema, LastNameSchema, PasswordSchema, RoleSchema } from "shared/default-schemas";
 
 export const CreateUserCommandSchema = z.object({
   firstName: FirstNameSchema,
@@ -11,14 +15,14 @@ export const CreateUserCommandSchema = z.object({
 
 export type CreateUserCommandSchemaType = z.infer<typeof CreateUserCommandSchema>;
 
-export class CreateUserCommand {
-  public firstName!: string;
-  public lastName!: string;
-  public email!: string;
-  public password!: string;
-  public role!: string;
-
-  constructor(props: CreateUserCommandSchemaType) {
-    Object.assign(this, props);
+export class CreateUserCommand extends RequestData<Result<CreateUserResponse, ZodError | BadRequestError>> {
+  constructor(
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public password: string,
+    public role: string
+  ) {
+    super();
   }
 }

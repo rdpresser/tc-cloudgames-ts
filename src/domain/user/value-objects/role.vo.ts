@@ -1,6 +1,6 @@
-import { ValueObject } from "../../../domain/common/value-object";
+import { ValueObject } from 'domain/common';
 import { err, ok, Result } from "neverthrow";
-import { RoleSchema } from "../../../shared/default-schemas/user-default-schema";
+import { RoleSchema } from 'shared/default-schemas';
 import { ZodError } from "zod/v4";
 
 export class Role extends ValueObject<string> {

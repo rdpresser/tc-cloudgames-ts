@@ -1,7 +1,7 @@
-import { PasswordSchema } from '../../../shared/default-schemas/user-default-schema';
+import { PasswordSchema } from 'shared/default-schemas';
 import { Result, err, ok } from 'neverthrow';
 import { ZodError } from 'zod/v4';
-import { ValueObject } from '../../../domain/common/value-object';
+import { ValueObject } from 'domain/common';
 
 export class Password extends ValueObject<string> {
   private constructor(value: string) {

@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { joinArrayWithQuotes } from "../extensions/string-extensions";
+import { joinArrayWithQuotes } from "shared/extensions";
 
 // This file contains default schemas for user-related data validation.
 

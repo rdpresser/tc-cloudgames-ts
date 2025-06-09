@@ -1,5 +1,5 @@
-import { User } from '../../../../domain/user/user.aggregate';
-import { GetUserResponse } from './query.response';
+import { User } from 'domain/user';
+import { GetUserResponse } from './';
 
 export class GetUserMapper {
     static toResponse(user: User): GetUserResponse {

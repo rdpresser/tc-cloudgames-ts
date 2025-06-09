@@ -27,10 +27,16 @@
 
     /* Modules */
     "module": "CommonJS",                                /* Specify what module code is generated. */
-    "rootDir": "./src",                                    /* Specify the root folder within your source files. */
+    "rootDir": "./src",                                  /* Specify the root folder within your source files. */
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
-    "baseUrl": "./src",                                    /* Specify the base directory to resolve non-relative module names. */
-    // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
+    "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
+    "paths": {                                           /* Specify a set of entries that re-map imports to additional lookup locations. */
+      "application/*": ["application/*"],
+      "domain/*": ["domain/*"],
+      "shared/*": ["shared/*"],
+      "interfaces/*": ["interfaces/*"],
+      "infrastructure/*": ["infrastructure/*"]
+    },                                     /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
      "typeRoots": ["node_modules/@types"],                                  /* Specify multiple folders that act like './node_modules/@types'. */
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
@@ -110,12 +116,15 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["src"],
+  "include": [                                           /* Specify files or folders to be included in the program. */
+    "src",
+    "test"
+  ],
   "exclude": [
     "node_modules",
     "dist",
-    "test",
-    "tests",
+    //"test",
+    //"tests",
     "coverage",
     "**/*.spec.ts",
     "**/*.test.ts",

@@ -1,20 +1,7 @@
+import { BadRequestError, NotFoundError } from 'application/common';
 import { FastifyReply } from 'fastify';
 import { Result } from 'neverthrow';
 import { ZodError } from 'zod/v4';
-
-export class BadRequestError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'BadRequestError';
-  }
-}
-
-export class NotFoundError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'NotFoundError';
-  }
-}
 
 export function handleResult<T, E extends Error>(result: Result<T, E>, reply: FastifyReply) {
   if (result.isOk()) {

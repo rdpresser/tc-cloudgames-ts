@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { FirstNameSchema, LastNameSchema } from "../../shared/default-schemas/user-default-schema";
+import { FirstNameSchema, LastNameSchema } from "shared/default-schemas";
 
 export const UniqueEmailSchema =
     z.email({ message: "Email must be a valid email address." })

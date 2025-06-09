@@ -1,10 +1,8 @@
-import { GetUserQuery } from './query.params';
-import { User } from '../../../../domain/user/user.aggregate';
-import { GetUserResponse } from './query.response';
-import { GetUserMapper } from './query.mapper';
+import { GetUserMapper, GetUserQuery, GetUserResponse } from './';
+import { User } from 'domain/user';
 import { ResultAsync, errAsync } from 'neverthrow';
-import { BadRequestError, NotFoundError } from '../../../../interfaces/custom-results/custom-result';
-import { isNullOrEmpty } from '../../../../shared/extensions/string-extensions';
+import { BadRequestError, NotFoundError } from 'application/common';
+import { isNullOrEmpty } from 'shared/extensions';
 import { ZodError } from 'zod/v4';
 
 export class GetUserQueryHandler {

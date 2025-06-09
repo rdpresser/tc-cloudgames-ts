@@ -1,6 +1,6 @@
-import { ValueObject } from '../../common/value-object';
+import { ValueObject } from 'domain/common';
 import { Result, err, ok } from 'neverthrow';
-import { EmailSchema } from '../../../shared/default-schemas/user-default-schema';
+import { EmailSchema } from 'shared/default-schemas';
 import { ZodError } from 'zod/v4';
 
 export class Email extends ValueObject<string> {
