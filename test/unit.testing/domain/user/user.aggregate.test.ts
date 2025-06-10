@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { User, type UserProps } from 'domain/user';
+import { test, expect } from 'vitest';
 
 test('Create_User_From_Aggregate_Should_Return_Success_When_All_Fields_Are_Valid', async () => {
   // Arrange

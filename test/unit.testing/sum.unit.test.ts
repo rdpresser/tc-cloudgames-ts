@@ -1,3 +1,5 @@
+import { test, expect } from "vitest";
+
 function sum(a: number, b: number): number {
   return a + b;
 }
