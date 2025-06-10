@@ -42,3 +42,23 @@ test('Create_User_From_Aggregate_Should_Return_Success_When_All_Fields_Are_Valid
     expect(userfromAggregate.password.value).toBeDefined();
   }
 });
+
+test('Create_User_From_Aggregate_Should_Return_Error_When_All_Fields_Are_Invalid', async () => {
+  // Arrange
+  const user: UserProps = {
+    firstName: '',
+    lastName: '',
+    email: 'invalid-email',
+    password: 'short',
+    role: 'InvalidRole'
+  };
+
+  // Act
+  const result = await User.create(user);
+
+  // Assert
+  expect(result.isErr()).toBe(true);
+  if (result.isErr()) {
+    expect(result.error).toBeDefined();
+  }
+});
