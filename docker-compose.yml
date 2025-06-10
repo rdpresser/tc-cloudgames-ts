@@ -1,0 +1,20 @@
+services:
+  tc-cloudgames-api-nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tc-cloudgames-api-nodejs:dev
+    container_name: tc-cloudgames-api-nodejs
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    networks:
+      - my-network
+    environment:
+      - NODE_ENV=development
+      - DB_CONNECTION_STRING=Server=db;Database=TCCloudGames;User Id=sa;Password=yourStrong(!)Password;
+    command: ["node", "--inspect=0.0.0.0:9229", "dist/index.js"]
+
+networks:
+  my-network:
+    driver: bridge

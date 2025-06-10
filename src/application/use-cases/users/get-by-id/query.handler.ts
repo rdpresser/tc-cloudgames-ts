@@ -22,9 +22,9 @@ export class GetUserQueryHandler
     const userResult = await User.create({
       firstName: 'User',
       lastName: 'LastName',
-      email: '',
-      password: '',
-      role: '',
+      email: 'rodrigo.presser@gmail.com',
+      password: 'User@123',
+      role: 'User',
     });
 
     if (userResult.isOk()) {

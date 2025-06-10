@@ -1,4 +1,4 @@
-import 'module-alias/register';
+import 'module-alias/register'; // to enable module aliasing for TypeScript path aliases
 import Fastify from 'fastify';
 import { Mediator } from 'mediatr-ts';
 // Import the handler so the decorator runs and registers it
@@ -12,7 +12,7 @@ getUserByIdRoute(fastify, new Mediator());
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000 });
+    await fastify.listen({ port: 3000, host: '0.0.0.0' });
     console.log('Server running at http://localhost:3000');
   } catch (err) {
     fastify.log.error(err);
