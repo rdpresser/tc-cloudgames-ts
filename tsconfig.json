@@ -118,8 +118,7 @@
   },
   "include": [                                           /* Specify files or folders to be included in the program. */
     "src",
-    "test",
-    "vitest.config.ts"
+    "test"
   ],
   "exclude": [
     "node_modules",
