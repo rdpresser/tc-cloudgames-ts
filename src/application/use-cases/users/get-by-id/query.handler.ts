@@ -1,38 +1,36 @@
 import { GetUserMapper, GetUserQuery, GetUserResponse } from 'application/use-cases/users/get-by-id';
 import { User } from 'domain/user';
-import { ResultAsync, errAsync } from 'neverthrow';
+import { Result, ok, err } from 'neverthrow';
 import { BadRequestError, NotFoundError } from 'application/common';
 import { isNullOrEmpty } from 'shared/extensions';
 import { ZodError } from 'zod/v4';
+import { RequestHandler, requestHandler } from 'mediatr-ts';
 
-export class GetUserQueryHandler {
-  handle(query: GetUserQuery): ResultAsync<GetUserResponse, ZodError | BadRequestError | NotFoundError> {
+@requestHandler(GetUserQuery)
+export class GetUserQueryHandler
+  implements RequestHandler<GetUserQuery, Result<GetUserResponse, ZodError | BadRequestError | NotFoundError>>
+{
+  async handle(query: GetUserQuery): Promise<Result<GetUserResponse, ZodError | BadRequestError | NotFoundError>> {
     if (!query) {
-      return errAsync(new BadRequestError('Invalid query'));
+      return err(new BadRequestError('Invalid query'));
     }
 
     if (isNullOrEmpty(query.id)) {
-      return errAsync(new NotFoundError('User not found'));
+      return err(new NotFoundError('User not found'));
     }
 
-    return ResultAsync.fromPromise(
-      Promise.resolve(
-        User.create({
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-          role: '',
-        }),
-      ),
-      (e) => e as ZodError | BadRequestError | NotFoundError,
-    ).map((userResult) => {
-      // If User.create returns a Result, extract the value
-      if (userResult.isOk()) {
-        return GetUserMapper.toResponse(userResult.value);
-      } else {
-        throw userResult.error;
-      }
+    const userResult = await User.create({
+      firstName: 'User',
+      lastName: 'LastName',
+      email: '',
+      password: '',
+      role: '',
     });
+
+    if (userResult.isOk()) {
+      return ok(GetUserMapper.toResponse(userResult.value));
+    } else {
+      return err(userResult.error);
+    }
   }
 }

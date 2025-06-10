@@ -13,6 +13,7 @@ export default defineConfig([
     "**/tests",
     "**/*.js",
     "**/*.d.ts",
+    "vitest.config.ts",
   ]),
   js.configs.recommended,
   {

@@ -1,7 +1,7 @@
 import { ValueObject } from 'domain/common';
 import { Result, err, ok } from 'neverthrow';
 import { EmailSchema } from 'shared/default-schemas';
-import { ZodError } from 'zod/v4';
+import { z, ZodError } from 'zod/v4';
 
 export class Email extends ValueObject<string> {
   private constructor(value: string) {
@@ -9,12 +9,16 @@ export class Email extends ValueObject<string> {
   }
 
   static create(email: string): Result<Email, ZodError> {
-    const result = EmailSchema.safeParse(email);
+    const EmailFieldSchema = z.object({
+      email: EmailSchema,
+    });
+
+    const result = EmailFieldSchema.safeParse({ email });
 
     if (!result.success) {
       return err(result.error);
     }
-    return ok(new Email(result.data));
+    return ok(new Email(result.data.email));
   }
 
   override toString() {

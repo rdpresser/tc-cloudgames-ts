@@ -3,11 +3,12 @@ import Fastify from 'fastify';
 import { Mediator } from 'mediatr-ts';
 // Import the handler so the decorator runs and registers it
 import './application/use-cases/handlers';
-import { createUserRoute } from 'interfaces/routes/user';
+import { createUserRoute, getUserByIdRoute } from 'interfaces/routes/user';
 
 const fastify = Fastify({ logger: true });
 
 createUserRoute(fastify, new Mediator());
+getUserByIdRoute(fastify, new Mediator());
 
 const start = async () => {
   try {

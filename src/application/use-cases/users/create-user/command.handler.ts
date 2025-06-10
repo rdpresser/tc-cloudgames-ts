@@ -8,9 +8,8 @@ import { CreateUserCommand, CreateUserResponse, CreateUserMapper } from 'applica
 export class CreateUserCommandHandler
   implements RequestHandler<CreateUserCommand, Result<CreateUserResponse, ZodError | BadRequestError>>
 {
-  /*constructor(private readonly userRepository: UserRepository) {}*/
   async handle(command: CreateUserCommand): Promise<Result<CreateUserResponse, ZodError | BadRequestError>> {
-    const userOrError = await Promise.resolve(CreateUserMapper.toDomain(command));
+    const userOrError = await CreateUserMapper.toDomain(command);
     if (userOrError.isErr()) {
       return err(userOrError.error);
     }
