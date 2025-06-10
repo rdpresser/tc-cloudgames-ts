@@ -1,7 +1,5 @@
 const { createDefaultPreset } = require("ts-jest");
 
-const tsJestTransformCfg = createDefaultPreset().transform;
-
 /** @type {import("jest").Config} **/
 module.exports = {
   preset: 'ts-jest',
@@ -13,5 +11,16 @@ module.exports = {
     '^interfaces/(.*)$': '<rootDir>/src/interfaces/$1',
     '^infrastructure/(.*)$': '<rootDir>/src/infrastructure/$1',
   },
-  testMatch: ['**/test/**/*.test.ts']
+  testMatch: ['**/test/**/*.test.ts'],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/index.ts",
+  ],
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov", "html"],
+  // Static analysis: run with --detectOpenHandles and --runInBand for better diagnostics
+  detectOpenHandles: true,
+  //runInBand: true
 };
