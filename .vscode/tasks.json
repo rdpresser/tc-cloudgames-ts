@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "typescript",
+      "tsconfig": "tsconfig.json",
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "group": "build",
+      "label": "tsc: build - tsconfig.json"
+    },
+    {
+      "label": "docker-compose: build (no-cache)",
+      "type": "shell",
+      "command": "docker compose build --no-cache",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker-compose: up",
+      "type": "shell",
+      "command": "docker compose up -d",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker-compose: build and up",
+      "dependsOn": [
+        "docker-compose: build (no-cache)",
+        "docker-compose: up"
+      ],
+      "dependsOrder": "sequence"
+    }
+  ]
+}
