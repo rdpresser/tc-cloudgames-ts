@@ -14,6 +14,7 @@ export default defineConfig([
     "**/*.js",
     "**/*.d.ts",
     "vitest.config.ts",
+    "drizzle.config.ts",
   ]),
   js.configs.recommended,
   {

@@ -15,7 +15,12 @@ function sendError(error: unknown, reply: FastifyReply) {
   } else if (error instanceof NotFoundError) {
     return reply.status(404).send({ error: error.message });
   } else {
-    return reply.status(500).send({ error: (error as Error)?.message || 'Internal Server Error' });
+    // 500 Internal Server Error with detailed JSON structure
+    return reply.status(500).send({
+      statusCode: 500,
+      error: 'Internal Server Error',
+      message: (error as Error)?.message || 'Internal Server Error',
+    });
   }
 }
 

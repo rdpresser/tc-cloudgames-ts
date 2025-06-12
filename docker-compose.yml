@@ -14,7 +14,7 @@ services:
       - tc-cloudgames-db-nodejs
     environment:
       - NODE_ENV=development
-      - DB_CONNECTION_STRING=Server=tc-cloudgames-db-nodejs;Database=tc_cloud_games_nodejs;User Id=postgres;Password=postgres;
+      - DB_CONNECTION_STRING=postgres://postgres:postgres@tc-cloudgames-db-nodejs:5432/tc_cloud_games_nodejs
     command: ['node', '--inspect=0.0.0.0:9229', 'dist/index.js']
 
   tc-cloudgames-db-nodejs:

@@ -1,4 +1,4 @@
-import { container, DependencyContainer } from 'tsyringe';
+import { container, DependencyContainer, Lifecycle } from 'tsyringe';
 import { db } from 'infrastructure/database/drizzle';
 import { UserRepository } from 'infrastructure/repositories/user.repository.impl';
 import { IUserRepository } from 'domain/user/user.repository';
@@ -26,10 +26,10 @@ export { container };
 
 export class ResolverDI implements Resolver {
   resolve<T>(type: Class<T>): T {
-    return container.resolve(type);
+    return container.resolve(type.name);
   }
 
   add<T>(type: Class<T>): void {
-    container.register(type, { useClass: type });
+    container.register(type.name, type, { lifecycle: Lifecycle.Transient });
   }
 }
