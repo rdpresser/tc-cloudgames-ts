@@ -4,6 +4,7 @@ import { CreateUserDomainSchema } from 'domain/user';
 import { BaseEntity } from 'domain/common';
 import { Email, Password, Role } from 'domain/user/value-objects';
 import { $ZodIssue } from 'zod/v4/core';
+import { UserIdSchemaType } from 'shared/default-schemas';
 
 export interface UserProps {
   firstName: string;
@@ -11,6 +12,7 @@ export interface UserProps {
   email: string;
   password: string;
   role: string;
+  id?: UserIdSchemaType;
 }
 
 export class User extends BaseEntity {
@@ -20,11 +22,16 @@ export class User extends BaseEntity {
     public readonly email: Email,
     public readonly password: Password,
     public readonly role: Role,
+    id: UserIdSchemaType,
   ) {
-    super();
+    super(id);
   }
 
-  public static async create(props: UserProps): Promise<Result<User, ZodError>> {
+  public static async create(props: Omit<UserProps, 'id'>): Promise<Result<User, ZodError>> {
+    return this.createWithId({ ...props, id: BaseEntity.generateId() });
+  }
+
+  public static async createWithId(props: UserProps): Promise<Result<User, ZodError>> {
     const issues: $ZodIssue[] = [];
 
     const emailOrError = Email.create(props.email);
@@ -43,6 +50,7 @@ export class User extends BaseEntity {
     }
 
     const result = await CreateUserDomainSchema.safeParseAsync({
+      id: props.id,
       firstName: props.firstName,
       lastName: props.lastName,
       email: props.email,
@@ -62,6 +70,15 @@ export class User extends BaseEntity {
       return err(new ZodError(issues));
     }
 
-    return ok(new User(props.firstName, props.lastName, emailOrError.value, passwordOrError.value, roleOrError.value));
+    return ok(
+      new User(
+        props.firstName,
+        props.lastName,
+        emailOrError.value,
+        passwordOrError.value,
+        roleOrError.value,
+        props.id!,
+      ),
+    );
   }
 }

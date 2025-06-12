@@ -1,5 +1,5 @@
 import { z } from 'zod/v4';
-import { FirstNameSchema, LastNameSchema } from 'shared/default-schemas';
+import { FirstNameSchema, LastNameSchema, UserIdSchema } from 'shared/default-schemas';
 import console from 'console';
 
 export const UniqueEmailSchema = z
@@ -16,7 +16,7 @@ export const UniqueEmailSchema = z
   );
 
 export const CreateUserDomainSchema = z.object({
-  //id: UserIdSchema,
+  id: UserIdSchema,
   firstName: FirstNameSchema,
   lastName: LastNameSchema,
   email: UniqueEmailSchema,

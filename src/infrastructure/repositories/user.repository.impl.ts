@@ -60,22 +60,13 @@ export class UserRepository implements IUserRepository {
 
     const userRow = row as {
       id: string;
-      first_name: string;
-      last_name: string;
+      firstName: string;
+      lastName: string;
       email: string;
       password: string;
       role: string;
     };
 
-    // Assuming UserProps is the type for User.create
-    const userProps: UserProps = {
-      firstName: userRow.first_name,
-      lastName: userRow.last_name,
-      email: userRow.email,
-      password: userRow.password,
-      role: userRow.role,
-    };
-
-    return await User.create(userProps);
+    return await User.createWithId(userRow);
   }
 }
