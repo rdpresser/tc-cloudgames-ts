@@ -3,12 +3,10 @@ import { ZodError } from 'zod/v4';
 import { RequestHandler, requestHandler } from 'mediatr-ts';
 import { BadRequestError } from 'application/common';
 import { CreateUserCommand, CreateUserResponse, CreateUserMapper } from 'application/use-cases/users/create-user';
-//import { inject, injectable } from 'tsyringe';
-//import { IUserRepository } from 'domain/user';
-//import { USER_REPOSITORY_TOKEN } from 'shared/ioc';
+import { injectable } from 'tsyringe';
 
-//@injectable()
 @requestHandler(CreateUserCommand)
+@injectable()
 export class CreateUserCommandHandler
   implements RequestHandler<CreateUserCommand, Result<CreateUserResponse, ZodError | BadRequestError>>
 {

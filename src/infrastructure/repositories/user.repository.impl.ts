@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { eq } from 'drizzle-orm';
 import { User, IUserRepository, UserProps } from 'domain/user';
 import { UserIdSchemaType } from 'shared/default-schemas';
@@ -6,13 +6,14 @@ import { db } from 'infrastructure/database';
 import { users } from 'infrastructure/database/schema';
 import { Result } from 'neverthrow';
 import { ZodError } from 'zod/v4';
+import { TYPES } from 'shared/ioc';
 
 @injectable()
-// TODO: fazer injeção de dependência do db
-
 export class UserRepository implements IUserRepository {
+  constructor(@inject(TYPES.Db) private readonly database: typeof db) {}
+
   async findById(id: UserIdSchemaType): Promise<User | null> {
-    const result = await db.select().from(users).where(eq(users.id, id));
+    const result = await this.database.select().from(users).where(eq(users.id, id));
     if (!result[0]) return null;
 
     const resultMap = await this.mapToDomain(result[0]);
@@ -23,7 +24,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const result = await db.select().from(users).where(eq(users.email, email));
+    const result = await this.database.select().from(users).where(eq(users.email, email));
     if (!result[0]) return null;
 
     const resultMap = await this.mapToDomain(result[0]);
@@ -34,7 +35,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async create(user: UserProps): Promise<User> {
-    const [created] = await db
+    const [created] = await this.database
       .insert(users)
       .values({
         firstName: user.firstName,

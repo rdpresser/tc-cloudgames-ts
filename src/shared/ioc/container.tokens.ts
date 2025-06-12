@@ -1,2 +1,6 @@
-export const USER_REPOSITORY_TOKEN = Symbol('IUserRepository');
-export const CONFIG_TOKEN = Symbol('Config');
+// Token definitions for dependency injection
+export const TYPES = {
+  Db: Symbol('Db'),
+  IUserRepository: Symbol('IUserRepository'),
+  Config: Symbol('Config'),
+};

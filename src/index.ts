@@ -1,18 +1,22 @@
-import 'module-alias/register'; // to enable module aliasing for TypeScript path aliases
 import 'reflect-metadata';
-import 'shared/ioc/container';
+import 'module-alias/register'; // to enable module aliasing for TypeScript path aliases
 import AppConfig from 'config';
+import { ResolverDI, setupContainer } from 'shared/ioc/container';
+import './application/use-cases/handlers'; // Import the handler so the decorator runs and registers it
 import Fastify from 'fastify';
 import { Mediator } from 'mediatr-ts';
 import process from 'process';
 import console from 'console';
-
-// Import the handler so the decorator runs and registers it
-import './application/use-cases/handlers';
 import { createUserRoute, getUserByIdRoute } from 'interfaces/routes/user';
 
 const fastify = Fastify({ logger: true });
-const mediator = new Mediator();
+
+setupContainer(); // Initialize the IoC container
+
+// Tell Mediator to use tsyringe for handler resolution
+const mediator = new Mediator({
+  resolver: new ResolverDI(),
+});
 
 createUserRoute(fastify, mediator);
 getUserByIdRoute(fastify, mediator);

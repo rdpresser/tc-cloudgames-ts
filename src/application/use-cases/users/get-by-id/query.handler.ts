@@ -6,14 +6,14 @@ import { isNullOrEmptyOrInvalidUuid } from 'shared/extensions';
 import { ZodError } from 'zod/v4';
 import { RequestHandler, requestHandler } from 'mediatr-ts';
 import { inject, injectable } from 'tsyringe';
-import { USER_REPOSITORY_TOKEN } from 'shared/ioc';
+import { TYPES } from 'shared/ioc';
 
-@injectable()
 @requestHandler(GetUserByIdQuery)
+@injectable()
 export class GetUserByIdQueryHandler
   implements RequestHandler<GetUserByIdQuery, Result<UserByIdResponse, ZodError | BadRequestError | NotFoundError>>
 {
-  constructor(@inject(USER_REPOSITORY_TOKEN) private readonly userRepository: IUserRepository) {}
+  constructor(@inject(TYPES.IUserRepository) private readonly userRepository: IUserRepository) {}
 
   async handle(query: GetUserByIdQuery): Promise<Result<UserByIdResponse, ZodError | BadRequestError | NotFoundError>> {
     if (!query) {
