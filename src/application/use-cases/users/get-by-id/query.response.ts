@@ -1,4 +1,4 @@
-export interface GetUserResponse {
+export interface UserByIdResponse {
   id: string;
   firstName: string;
   lastName: string;

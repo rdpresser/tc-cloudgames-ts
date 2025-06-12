@@ -25,4 +25,9 @@ export class CreateUserCommand extends RequestData<Result<CreateUserResponse, Zo
   ) {
     super();
   }
+
+  static parse(data: unknown): CreateUserCommand {
+    const parsed = CreateUserCommandSchema.parse(data);
+    return new CreateUserCommand(parsed.firstName, parsed.lastName, parsed.email, parsed.password, parsed.role);
+  }
 }

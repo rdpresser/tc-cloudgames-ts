@@ -21,6 +21,7 @@ export default defineConfig({
       shared: '/src/shared',
       interfaces: '/src/interfaces',
       infrastructure: '/src/infrastructure',
+      config: '/src/config',
     },
   },
   resolve: {
@@ -30,6 +31,7 @@ export default defineConfig({
       shared: '/src/shared',
       interfaces: '/src/interfaces',
       infrastructure: '/src/infrastructure',
+      config: '/src/config',
     },
   },
 });

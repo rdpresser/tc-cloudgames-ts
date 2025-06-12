@@ -1,8 +1,8 @@
 import { User } from 'domain/user';
-import { GetUserResponse } from 'application/use-cases/users/get-by-id';
+import { UserByIdResponse } from 'application/use-cases/users/get-by-id';
 
-export class GetUserMapper {
-  static toResponse(user: User): GetUserResponse {
+export class GetUserByIdMapper {
+  static toResponse(user: User): UserByIdResponse {
     return {
       id: user.id,
       firstName: user.firstName,

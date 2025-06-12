@@ -1,4 +1,4 @@
-import { GetUserQuery } from 'application/use-cases/users/get-by-id';
+import { GetUserByIdQuery } from 'application/use-cases/users/get-by-id';
 import { FastifyInstance } from 'fastify';
 import { handleResult } from 'interfaces/http';
 import { Mediator } from 'mediatr-ts';
@@ -15,7 +15,7 @@ export async function getUserByIdRoute(fastify: FastifyInstance, mediator: Media
     }
 
     // Use the mediator to handle the query
-    const user = await mediator.send(new GetUserQuery(id));
+    const user = await mediator.send(new GetUserByIdQuery(id));
     return handleResult(user, reply);
   });
 }

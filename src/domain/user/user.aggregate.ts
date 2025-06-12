@@ -1,7 +1,7 @@
 import { Result, err, ok } from 'neverthrow';
 import { ZodError } from 'zod/v4';
 import { CreateUserDomainSchema } from 'domain/user';
-import { BaseEntityWithId } from 'domain/common';
+import { BaseEntity } from 'domain/common';
 import { Email, Password, Role } from 'domain/user/value-objects';
 import { $ZodIssue } from 'zod/v4/core';
 
@@ -13,7 +13,7 @@ export interface UserProps {
   role: string;
 }
 
-export class User extends BaseEntityWithId {
+export class User extends BaseEntity {
   private constructor(
     public readonly firstName: string,
     public readonly lastName: string,

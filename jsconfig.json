@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
+      "config": ["config"],
       "application/*": ["application/*"],
       "domain/*": ["domain/*"],
       "shared/*": ["shared/*"],
@@ -9,13 +10,6 @@
       "infrastructure/*": ["infrastructure/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "coverage"
-  ]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", "dist", "coverage"]
 }

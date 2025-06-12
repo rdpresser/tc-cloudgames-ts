@@ -6,15 +6,34 @@ services:
     image: tc-cloudgames-api-nodejs:dev
     container_name: tc-cloudgames-api-nodejs
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - '3000:3000'
+      - '9229:9229'
     networks:
       - my-network
+    depends_on:
+      - tc-cloudgames-db-nodejs
     environment:
       - NODE_ENV=development
-      - DB_CONNECTION_STRING=Server=db;Database=TCCloudGames;User Id=sa;Password=yourStrong(!)Password;
-    command: ["node", "--inspect=0.0.0.0:9229", "dist/index.js"]
+      - DB_CONNECTION_STRING=Server=tc-cloudgames-db-nodejs;Database=tc_cloud_games_nodejs;User Id=postgres;Password=postgres;
+    command: ['node', '--inspect=0.0.0.0:9229', 'dist/index.js']
+
+  tc-cloudgames-db-nodejs:
+    image: postgres:latest
+    container_name: tc-cloudgames-db-nodejs
+    environment:
+      - POSTGRES_DB=tc_cloud_games_nodejs
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '54321:5432'
+    networks:
+      - my-network
 
 networks:
   my-network:
     driver: bridge
+
+volumes:
+  postgres_data:

@@ -8,6 +8,8 @@ export const UserIdSchema = z
   .uuidv4({ message: 'User Id must be a valid UUID.' })
   .nonempty({ message: 'User Id is required.' });
 
+export type UserIdSchemaType = z.infer<typeof UserIdSchema>;
+
 // Schema for Password
 // Password must be at least 8 characters long, contain uppercase, lowercase, digits, and special characters.
 export const PasswordSchema = z
