@@ -1,7 +1,7 @@
 import { err, ok, Result } from 'neverthrow';
 import { ZodError } from 'zod/v4';
 import { RequestHandler, requestHandler } from 'mediatr-ts';
-import { BadRequestError, throwIfUniqueViolation } from 'application/common';
+import { BadRequestError, throwIfUniqueViolation, toResultError } from 'application/common';
 import { CreateUserCommand, CreateUserResponse, CreateUserMapper } from 'application/use-cases/users/create-user';
 import { inject, injectable } from 'tsyringe';
 import { TYPES } from 'shared/ioc';
@@ -29,7 +29,7 @@ export class CreateUserCommandHandler
       return ok(CreateUserMapper.toResponse(createdUser));
     } catch (error) {
       throwIfUniqueViolation(error, 'Email already exists.');
-      return err(error as BadRequestError | ZodError);
+      return toResultError<CreateUserResponse>(error);
     }
   }
 }

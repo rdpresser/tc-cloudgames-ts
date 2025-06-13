@@ -1,3 +1,6 @@
+import { err, Result } from 'neverthrow';
+import { ZodError } from 'zod/v4';
+
 export class BadRequestError extends Error {
   constructor(message: string) {
     super(message);
@@ -23,4 +26,17 @@ export function throwIfUniqueViolation(error: unknown, message = 'Email already 
   ) {
     throw new BadRequestError(message);
   }
+}
+
+export function toResultError<T>(
+  error: unknown,
+  fallbackMessage = 'An unexpected error occurred.',
+): Result<T, ZodError | BadRequestError | NotFoundError | Error> {
+  if (error instanceof BadRequestError || error instanceof NotFoundError || error instanceof ZodError) {
+    return err(error);
+  }
+  if (error instanceof Error) {
+    return err(new Error(error.message || fallbackMessage));
+  }
+  return err(new Error(fallbackMessage));
 }
