@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { eq } from 'drizzle-orm';
-import { User, IUserRepository, UserProps } from 'domain/user';
+import { User, IUserRepository } from 'domain/user';
 import { UserIdSchemaType } from 'shared/default-schemas';
 import { db } from 'infrastructure/database';
 import { users } from 'infrastructure/database/schema';
@@ -34,15 +34,15 @@ export class UserRepository implements IUserRepository {
     return null;
   }
 
-  async create(user: UserProps): Promise<User> {
+  async create(user: User): Promise<User> {
     const [created] = await this.database
       .insert(users)
       .values({
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-        role: user.role,
+        email: user.email.value,
+        password: user.password.value,
+        role: user.role.value,
       })
       .returning();
 

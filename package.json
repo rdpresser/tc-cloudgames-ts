@@ -40,6 +40,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.28.0",
     "@types/convict": "^6.1.6",
+    "@types/convict-format-with-validator": "^6.0.5",
     "@types/node": "^24.0.1",
     "@types/pg": "^8.15.4",
     "@typescript-eslint/eslint-plugin": "^8.34.0",
@@ -64,11 +65,12 @@
     "@faker-js/faker": "^9.8.0",
     "@fastify/sensible": "^6.0.3",
     "convict": "^6.2.4",
+    "convict-format-with-validator": "^6.2.0",
     "drizzle-orm": "^0.44.2",
     "eslint-plugin-neverthrow": "^1.1.4",
-    "fastify": "^5.3.3",
+    "fastify": "^5.4.0",
     "fastify-plugin": "^5.0.1",
-    "mediatr-ts": "^2.0.2",
+    "mediatr-ts": "^2.1.0",
     "module-alias": "^2.2.3",
     "neverthrow": "^8.2.0",
     "pg": "^8.16.0",
@@ -76,7 +78,7 @@
     "ts-mockito": "^2.6.1",
     "tsyringe": "^4.10.0",
     "uuid": "^11.1.0",
-    "zod": "^3.25.62"
+    "zod": "^3.25.64"
   },
   "_moduleAliases": {
     "config": "dist/config",

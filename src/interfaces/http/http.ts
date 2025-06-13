@@ -11,9 +11,17 @@ function sendError(error: unknown, reply: FastifyReply) {
   if (isZodError(error)) {
     return handleZodError(error, reply);
   } else if (error instanceof BadRequestError) {
-    return reply.status(400).send({ error: error.message });
+    return reply.status(400).send({
+      statusCode: 400,
+      error: 'Bad Request',
+      message: error.message,
+    });
   } else if (error instanceof NotFoundError) {
-    return reply.status(404).send({ error: error.message });
+    return reply.status(404).send({
+      statusCode: 404,
+      error: 'Not Found',
+      message: error.message,
+    });
   } else {
     // 500 Internal Server Error with detailed JSON structure
     return reply.status(500).send({
